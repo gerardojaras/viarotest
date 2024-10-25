@@ -1,0 +1,30 @@
+@Api_HostAddress = http://localhost:5267
+
+GET {{Api_HostAddress}}/api/Alumno/
+Accept: application/json
+
+### new alumno
+POST {{Api_HostAddress}}/api/Alumno/
+Content-Type: application/json
+
+{
+  "Id": "1",
+  "Nombre": "Gerardo",
+  "Apellidos": "Jaramillo Contreras",
+  "Genero": 1,
+  "CreatedBy": 1
+}
+
+### update Alumno
+
+PUT {{Api_HostAddress}}/api/Alumno/
+Content-Type: application/json
+
+{
+  "Id": "1",
+  "Nombre": "Gerardo Jose",
+  "Apellidos": "Jaramillo Contreras",
+  "Genero": 1,
+  "CreatedBy": 1
+}
+
