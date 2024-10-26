@@ -8,12 +8,12 @@ namespace Api.Controllers;
 [Route("api/[controller]")]
 public class GradoAlumnoController(IGradoAlumnoService gradoAlumnoService):ControllerBase
 {
-    [HttpPost]
-    public async Task<ServiceResponse<Alumno>> PostGrado(int idAlumno, int idGrado)
+    [HttpGet, Route("Assignar")]
+    public async Task<ServiceResponse<Alumno>> PostGrado(int AlumnoId, int GradoId)
     {
         try
         {
-            var newGrado = await gradoAlumnoService.AssignAlumnoToGrado(idAlumno, idGrado);
+            var newGrado = await gradoAlumnoService.AssignAlumnoToGrado(AlumnoId, GradoId);
             return newGrado;
         }
         catch (Exception e)

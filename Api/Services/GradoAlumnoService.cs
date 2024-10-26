@@ -14,7 +14,6 @@ public class GradoAlumnoService(ColegioContext context): IGradoAlumnoService
             var alumno = await context.Alumnos.FirstOrDefaultAsync(a => a.Id == alumnoId);
             var grado = await context.Grados.FirstOrDefaultAsync(a => a.Id == gradoId);
             alumno.Grados.Add(grado);
-            grado.Alumnos.Add(alumno);
             await context.SaveChangesAsync();
             response.Data = alumno;
             response.Success = true;
