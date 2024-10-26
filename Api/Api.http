@@ -106,8 +106,12 @@ GET {{Api_HostAddress}}/api/Grado/Todos
 Accept: application/json
 
 
-### Asignando grados
+### Asignar alumno a grado
 GET {{Api_HostAddress}}/api/GradoAlumno/Assignar?AlumnoId=3&GradoId=5
 Accept: application/json
 
+### Remover alumno de grado
+
+GET {{Api_HostAddress}}/api/GradoAlumno/Remover?AlumnoId=3&GradoId=5
+Accept: application/json
 

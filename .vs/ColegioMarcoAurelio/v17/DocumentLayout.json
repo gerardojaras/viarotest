@@ -3,8 +3,32 @@
   "WorkspaceRootPath": "D:\\Personal Projects\\Viaro\\ColegioMarcoAurelio\\ColegioMarcoAurelio\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{35D97AB5-3EED-4C5A-9736-538329B1C8CE}|Api\\Api.csproj|d:\\personal projects\\viaro\\colegiomarcoaurelio\\colegiomarcoaurelio\\api\\colegiocontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{35D97AB5-3EED-4C5A-9736-538329B1C8CE}|Api\\Api.csproj|solutionrelative:api\\colegiocontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{35D97AB5-3EED-4C5A-9736-538329B1C8CE}|Api\\Api.csproj|d:\\personal projects\\viaro\\colegiomarcoaurelio\\colegiomarcoaurelio\\api\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{35D97AB5-3EED-4C5A-9736-538329B1C8CE}|Api\\Api.csproj|solutionrelative:api\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35D97AB5-3EED-4C5A-9736-538329B1C8CE}|Api\\Api.csproj|d:\\personal projects\\viaro\\colegiomarcoaurelio\\colegiomarcoaurelio\\api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{35D97AB5-3EED-4C5A-9736-538329B1C8CE}|Api\\Api.csproj|solutionrelative:api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35D97AB5-3EED-4C5A-9736-538329B1C8CE}|Api\\Api.csproj|d:\\personal projects\\viaro\\colegiomarcoaurelio\\colegiomarcoaurelio\\api\\controllers\\alumnocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{35D97AB5-3EED-4C5A-9736-538329B1C8CE}|Api\\Api.csproj|solutionrelative:api\\controllers\\alumnocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35D97AB5-3EED-4C5A-9736-538329B1C8CE}|Api\\Api.csproj|d:\\personal projects\\viaro\\colegiomarcoaurelio\\colegiomarcoaurelio\\api\\api.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
+      "RelativeMoniker": "D:0:0:{35D97AB5-3EED-4C5A-9736-538329B1C8CE}|Api\\Api.csproj|solutionrelative:api\\api.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35D97AB5-3EED-4C5A-9736-538329B1C8CE}|Api\\Api.csproj|d:\\personal projects\\viaro\\colegiomarcoaurelio\\colegiomarcoaurelio\\api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{35D97AB5-3EED-4C5A-9736-538329B1C8CE}|Api\\Api.csproj|solutionrelative:api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1A387A7-205B-473F-BF7E-FC9C1E5A38D8}|Client\\Client.csproj|d:\\personal projects\\viaro\\colegiomarcoaurelio\\colegiomarcoaurelio\\client\\services\\alumnoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1A387A7-205B-473F-BF7E-FC9C1E5A38D8}|Client\\Client.csproj|solutionrelative:client\\services\\alumnoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1A387A7-205B-473F-BF7E-FC9C1E5A38D8}|Client\\Client.csproj|d:\\personal projects\\viaro\\colegiomarcoaurelio\\colegiomarcoaurelio\\client\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E1A387A7-205B-473F-BF7E-FC9C1E5A38D8}|Client\\Client.csproj|solutionrelative:client\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,19 +38,97 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ColegioContext.cs",
-              "DocumentMoniker": "D:\\Personal Projects\\Viaro\\ColegioMarcoAurelio\\ColegioMarcoAurelio\\Api\\ColegioContext.cs",
-              "RelativeDocumentMoniker": "Api\\ColegioContext.cs",
-              "ToolTip": "D:\\Personal Projects\\Viaro\\ColegioMarcoAurelio\\ColegioMarcoAurelio\\Api\\ColegioContext.cs",
-              "RelativeToolTip": "Api\\ColegioContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAABAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "AlumnoController.cs",
+              "DocumentMoniker": "D:\\Personal Projects\\Viaro\\ColegioMarcoAurelio\\ColegioMarcoAurelio\\Api\\Controllers\\AlumnoController.cs",
+              "RelativeDocumentMoniker": "Api\\Controllers\\AlumnoController.cs",
+              "ToolTip": "D:\\Personal Projects\\Viaro\\ColegioMarcoAurelio\\ColegioMarcoAurelio\\Api\\Controllers\\AlumnoController.cs",
+              "RelativeToolTip": "Api\\Controllers\\AlumnoController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACoAAABGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-24T23:59:51.261Z",
+              "WhenOpened": "2024-10-26T20:41:07.261Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "D:\\Personal Projects\\Viaro\\ColegioMarcoAurelio\\ColegioMarcoAurelio\\Api\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "Api\\Properties\\launchSettings.json",
+              "ToolTip": "D:\\Personal Projects\\Viaro\\ColegioMarcoAurelio\\ColegioMarcoAurelio\\Api\\Properties\\launchSettings.json",
+              "RelativeToolTip": "Api\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-10-26T20:40:40.693Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\Personal Projects\\Viaro\\ColegioMarcoAurelio\\ColegioMarcoAurelio\\Api\\appsettings.json",
+              "RelativeDocumentMoniker": "Api\\appsettings.json",
+              "ToolTip": "D:\\Personal Projects\\Viaro\\ColegioMarcoAurelio\\ColegioMarcoAurelio\\Api\\appsettings.json",
+              "RelativeToolTip": "Api\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-10-26T20:40:25.883Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Personal Projects\\Viaro\\ColegioMarcoAurelio\\ColegioMarcoAurelio\\Api\\Program.cs",
+              "RelativeDocumentMoniker": "Api\\Program.cs",
+              "ToolTip": "D:\\Personal Projects\\Viaro\\ColegioMarcoAurelio\\ColegioMarcoAurelio\\Api\\Program.cs",
+              "RelativeToolTip": "Api\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACEAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-26T20:36:52.852Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Api.http",
+              "DocumentMoniker": "D:\\Personal Projects\\Viaro\\ColegioMarcoAurelio\\ColegioMarcoAurelio\\Api\\Api.http",
+              "RelativeDocumentMoniker": "Api\\Api.http",
+              "ToolTip": "D:\\Personal Projects\\Viaro\\ColegioMarcoAurelio\\ColegioMarcoAurelio\\Api\\Api.http",
+              "RelativeToolTip": "Api\\Api.http",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
+              "WhenOpened": "2024-10-26T20:32:39.426Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "AlumnoService.cs",
+              "DocumentMoniker": "D:\\Personal Projects\\Viaro\\ColegioMarcoAurelio\\ColegioMarcoAurelio\\Client\\Services\\AlumnoService.cs",
+              "RelativeDocumentMoniker": "Client\\Services\\AlumnoService.cs",
+              "ToolTip": "D:\\Personal Projects\\Viaro\\ColegioMarcoAurelio\\ColegioMarcoAurelio\\Client\\Services\\AlumnoService.cs",
+              "RelativeToolTip": "Client\\Services\\AlumnoService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-26T20:29:29.03Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "MainLayout.razor",
+              "DocumentMoniker": "D:\\Personal Projects\\Viaro\\ColegioMarcoAurelio\\ColegioMarcoAurelio\\Client\\Layout\\MainLayout.razor",
+              "RelativeDocumentMoniker": "Client\\Layout\\MainLayout.razor",
+              "ToolTip": "D:\\Personal Projects\\Viaro\\ColegioMarcoAurelio\\ColegioMarcoAurelio\\Client\\Layout\\MainLayout.razor",
+              "RelativeToolTip": "Client\\Layout\\MainLayout.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-26T18:28:57.282Z",
               "EditorCaption": ""
             }
           ]

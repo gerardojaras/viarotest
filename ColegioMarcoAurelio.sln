@@ -1,10 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{2ED9C31F-26BD-4580-972C-E679830D5A27}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35312.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Shared\Shared.csproj", "{2ED9C31F-26BD-4580-972C-E679830D5A27}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{E1A387A7-205B-473F-BF7E-FC9C1E5A38D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Client", "Client\Client.csproj", "{E1A387A7-205B-473F-BF7E-FC9C1E5A38D8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2ED9C31F-26BD-4580-972C-E679830D5A27} = {2ED9C31F-26BD-4580-972C-E679830D5A27}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "Api\Api.csproj", "{35D97AB5-3EED-4C5A-9736-538329B1C8CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api", "Api\Api.csproj", "{35D97AB5-3EED-4C5A-9736-538329B1C8CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,5 +30,8 @@ Global
 		{35D97AB5-3EED-4C5A-9736-538329B1C8CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35D97AB5-3EED-4C5A-9736-538329B1C8CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35D97AB5-3EED-4C5A-9736-538329B1C8CE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal
