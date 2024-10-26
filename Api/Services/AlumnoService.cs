@@ -10,7 +10,31 @@ public class AlumnoService(ColegioContext context) : IAlumnoService
 
     public async Task<ServiceResponse<Alumno>> GetAlumno(int id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var response = new ServiceResponse<Alumno>();
+            var alumno = await context.Alumnos.FirstOrDefaultAsync(a => a.Id == id);
+            if (alumno != null)
+            {
+                response.StatusCode = 200;
+                response.Success = true;
+                response.Message = "Alumno se ha encontrado";
+                response.Data = alumno;
+            }
+            else
+            {
+                response.StatusCode = 204;
+                response.Success = false;
+                response.Message = "Alumno no se ha encontrado";
+            }
+
+            return response;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 
     public async Task<ServiceResponse<List<Alumno>>> GetAlumnos()
@@ -66,7 +90,11 @@ public class AlumnoService(ColegioContext context) : IAlumnoService
             var existingAlumno = await context.Alumnos.FirstOrDefaultAsync(a => a.Id == newAlumno.Id);
             if (existingAlumno != null)
             {
-                existingAlumno = newAlumno;
+                existingAlumno.Nombre = newAlumno.Nombre;
+                existingAlumno.Apellidos = newAlumno.Apellidos;
+                existingAlumno.Grados = newAlumno.Grados;
+                existingAlumno.Genero = newAlumno.Genero;
+                existingAlumno.FechaDeNacimiento = newAlumno.FechaDeNacimiento;
                 await context.SaveChangesAsync();
                 response.Data = existingAlumno;
                 response.Success = true;
@@ -87,6 +115,30 @@ public class AlumnoService(ColegioContext context) : IAlumnoService
 
     public async Task<ServiceResponse<Alumno>> DeleteAlumno(int id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var existingAlumno = await context.Alumnos.FirstOrDefaultAsync(a => a.Id == id);
+            var response = new ServiceResponse<Alumno>();
+            if (existingAlumno != null)
+            {
+                context.Alumnos.Remove(existingAlumno);
+                await context.SaveChangesAsync();
+                response.Data = existingAlumno;
+                response.Success = true;
+                response.StatusCode = 201;
+            }
+            else
+            {
+                response.StatusCode = 204;
+                response.Success = false;
+            }
+
+            return response;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 }

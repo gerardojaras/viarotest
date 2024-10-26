@@ -8,11 +8,9 @@ POST {{Api_HostAddress}}/api/Alumno/
 Content-Type: application/json
 
 {
-  "Id": "1",
-  "Nombre": "Gerardo",
-  "Apellidos": "Jaramillo Contreras",
-  "Genero": 1,
-  "CreatedBy": 1
+  "Nombre": "Nicole",
+  "Apellidos": "Hernandez",
+  "Genero": 2
 }
 
 ### update Alumno
@@ -21,10 +19,90 @@ PUT {{Api_HostAddress}}/api/Alumno/
 Content-Type: application/json
 
 {
-  "Id": "1",
-  "Nombre": "Gerardo Jose",
-  "Apellidos": "Jaramillo Contreras",
+  "Id": 1,
+  "Nombre": "Jose Gabriel",
+  "Apellidos": "Jaramillo Gonzales",
   "Genero": 1,
   "CreatedBy": 1
 }
+
+### delete alumno
+DELETE {{Api_HostAddress}}/api/Alumno?id=1
+Accept: application/json
+
+### get Alumno
+GET {{Api_HostAddress}}/api/Alumno?id=2
+Accept: application/json
+
+### get Alumnos
+GET {{Api_HostAddress}}/api/Alumno/Todos
+Accept: application/json
+
+### new Profesor
+POST {{Api_HostAddress}}/api/Profesor
+Content-Type: application/json
+
+{
+  "Nombre": "Claudia",
+  "Apellido": "Gonzales",
+  "Genero": 1
+}
+
+### updateProfesor
+PUT {{Api_HostAddress}}/api/Profesor
+Content-Type: application/json
+
+{
+  "Id": 4,
+  "Nombre": "Claudia",
+  "Apellido": "Gonzales",
+  "Genero": 1
+}
+
+### delete Profesor
+DELETE {{Api_HostAddress}}/api/Profesor?id=4
+Accept: application/json
+
+### get Profesor
+GET {{Api_HostAddress}}/api/Profesor?id=3
+Accept: application/json
+
+### get Profesores
+GET {{Api_HostAddress}}/api/Profesor/Todos
+Accept: application/json
+
+### new Grado
+POST {{Api_HostAddress}}/api/Grado
+Content-Type: application/json
+
+{
+  "Nombre": "2ro",
+  "Seccion": "A",
+  "ProfesorId": 6
+}
+
+### update Grado
+PUT {{Api_HostAddress}}/api/Grado
+Content-Type: application/json
+
+{
+  "Id": 5,
+  "Nombre": "2do",
+  "Seccion": "A",
+  "ProfesorId": 6
+}
+
+### DELETE Grado
+DELETE {{Api_HostAddress}}/api/Grado?id=3
+Accept: application/json
+
+### GET Grado
+GET {{Api_HostAddress}}/api/Grado?id=4
+Accept: application/json
+
+
+### GET Grados
+GET {{Api_HostAddress}}/api/Grado/Todos
+Accept: application/json
+
 

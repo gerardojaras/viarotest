@@ -7,5 +7,5 @@ public class Alumno:ColegioEntity
     public int Genero { get; set; } 
     public DateTime FechaDeNacimiento { get; set; }
 
-    public Grado? Grado { get; set; } = null;
+    public ICollection<Grado> Grados { get; set; } = [];
 }

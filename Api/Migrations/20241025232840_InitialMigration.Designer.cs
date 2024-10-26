@@ -11,14 +11,29 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.Migrations
 {
     [DbContext(typeof(ColegioContext))]
-    [Migration("20241024234303_firstMigration")]
-    partial class firstMigration
+    [Migration("20241025232840_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.10");
+
+            modelBuilder.Entity("AlumnoGrado", b =>
+                {
+                    b.Property<int>("AlumnosId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("GradosId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("AlumnosId", "GradosId");
+
+                    b.HasIndex("GradosId");
+
+                    b.ToTable("AlumnoGrado", (string)null);
+                });
 
             modelBuilder.Entity("Shared.Alumno", b =>
                 {
@@ -70,7 +85,13 @@ namespace Api.Migrations
                     b.Property<int>("ProfesorId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Seccion")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ProfesorId");
 
                     b.ToTable("Grados");
                 });
@@ -101,6 +122,37 @@ namespace Api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Profesores");
+                });
+
+            modelBuilder.Entity("AlumnoGrado", b =>
+                {
+                    b.HasOne("Shared.Alumno", null)
+                        .WithMany()
+                        .HasForeignKey("AlumnosId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Shared.Grado", null)
+                        .WithMany()
+                        .HasForeignKey("GradosId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Shared.Grado", b =>
+                {
+                    b.HasOne("Shared.Profesor", "Profesor")
+                        .WithMany("Grados")
+                        .HasForeignKey("ProfesorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Profesor");
+                });
+
+            modelBuilder.Entity("Shared.Profesor", b =>
+                {
+                    b.Navigation("Grados");
                 });
 #pragma warning restore 612, 618
         }

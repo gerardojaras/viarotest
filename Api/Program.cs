@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Api;
 using Api.Interfaces;
 using Api.Services;
@@ -14,6 +15,8 @@ builder.Services.AddDbContext<ColegioContext>(options =>
 builder.Services.AddScoped<IAlumnoService, AlumnoService>();
 builder.Services.AddScoped<IGradoService, GradoService>();
 builder.Services.AddScoped<IProfesorService, ProfesorService>();
+builder.Services.AddScoped<IGradoAlumnoService, GradoAlumnoService>();
+builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(options => options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 builder.Services.AddControllers();
 

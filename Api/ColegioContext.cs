@@ -15,8 +15,13 @@ public class ColegioContext(IConfiguration configuration) : DbContext
 
    protected override void OnModelCreating(ModelBuilder modelBuilder)
    {
+       modelBuilder.Entity<Grado>().HasKey(x => x.Id);
+       modelBuilder.Entity<Alumno>().HasKey(x => x.Id);
+       modelBuilder.Entity<Profesor>().HasKey(x => x.Id);
        modelBuilder.Entity<Grado>()
-           .HasMany(a => a.Alumnos);
+           .HasMany(g => g.Alumnos)
+           .WithMany(a => a.Grados)
+           .UsingEntity(t => t.ToTable("AlumnoGrado"));
    }
    
    public DbSet<Alumno> Alumnos { get; set; }

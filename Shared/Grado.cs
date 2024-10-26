@@ -6,6 +6,5 @@ public class Grado: ColegioEntity
     public int ProfesorId { get; set; }
     public string Seccion { get; set; } = String.Empty;
     
-    public ICollection<Alumno> Alumnos { get; set; } = new List<Alumno>();
-    public Profesor Profesor { get; set; } = new Profesor();
+    public ICollection<Alumno> Alumnos { get; set; } = [];
 }
