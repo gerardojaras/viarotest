@@ -1,22 +1,34 @@
 @page "/Asignaturas"
-@inject GradoService GradoService
-@inject AlumnoService AlumnoService
+@using Client.Interfaces
+@inject IGradoService GradoService
+@inject IAlumnosService AlumnoService
 @inject ISnackbar Snackbar
 
 <h3>Asignar Alumno a Grado</h3>
 
-<MudSelect T="int" MultiSelection="true" SelectAll="true" SelectAllText="Select Alumnos" @bind-Value="AlumnoValue" @bind-SelectedValues="_selectedAlumnos" MultiSelectionTextFunc="@(new Func<List<string>, string>(GetMultiSelectionText))" Label="Felines" AdornmentIcon="@Icons.Material.Filled.Search">
+<MudSelect T="string" MultiSelection="false" SelectAll="false" SelectAllText="Seleccione Alumnos" @bind-Value="AlumnoValue" @bind-SelectedValues="_selectedAlumnos" MultiSelectionTextFunc="@(new Func<List<string>, string>(GetMultiSelectionText))" Label="Seleccion Alumno" AdornmentIcon="@Icons.Material.Filled.Search">
     @foreach (var alumno in _alumnos)
     {
-    <MudSelectItem T="int" Value="@alumno.Id">@alumno.Nombre @alumno.Apellidos</MudSelectItem>
+        <MudSelectItem T="string" Value="@alumno.Id.ToString()">@alumno.Nombre @alumno.Apellidos</MudSelectItem>
     }
 </MudSelect>
+
+<MudSelect T="string" MultiSelection="false" SelectAll="false" SelectAllText="Seleccione Grados" @bind-Value="GradoValue" @bind-SelectedValues="_selectedGrados" MultiSelectionTextFunc="@(new Func<List<string>, string>(GetMultiSelectionText))" Label="Seleccion Grado" AdornmentIcon="@Icons.Material.Filled.Search">
+    @foreach (var grado in _grados)
+    {
+        <MudSelectItem T="string" Value="@grado.Id.ToString()">@grado.Nombre @grado.Seccion</MudSelectItem>
+    }
+</MudSelect>
+
+<MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="AssignAlumno">Agregar Alumno</MudButton>
 
 @code {
     private List<Alumno> _alumnos = [];
     private List<Grado> _grados = [];
-    private IEnumerable<int> _selectedAlumnos = [];
-    private int AlumnoValue { get; set; } = 0;
+    private IEnumerable<string> _selectedAlumnos = [];
+    private IEnumerable<string> _selectedGrados = [];
+    private string AlumnoValue { get; set; } = "Seleccione alumno";
+    private string GradoValue { get; set; } = "Seleccione grado";
     
     protected override async Task OnInitializedAsync()
     {
@@ -42,12 +54,18 @@
         }
         else
         {
-            Snackbar.Add("Hubo un error", Severity.Error);
+            Snackbar.Add("Grados No cargados", Severity.Error);
         }
     }
     
     private string GetMultiSelectionText(List<string> selectedValues)
     {
         return $"{selectedValues.Count}";
+    }
+
+    async void AssignAlumno()
+    {
+        var alumnosSeleccionados = _alumnos;
+        var gradosSeleccionados = _grados;
     }
 }
