@@ -22,6 +22,9 @@ public class ColegioContext(IConfiguration configuration) : DbContext
            .HasMany(g => g.Alumnos)
            .WithMany(a => a.Grados)
            .UsingEntity(t => t.ToTable("AlumnoGrado"));
+       modelBuilder.Entity<Grado>()
+           .HasOne(p => p.Profesor)
+           .WithOne(gp => gp.Grado);
    }
    
    public DbSet<Alumno> Alumnos { get; set; }

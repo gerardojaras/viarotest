@@ -65,22 +65,28 @@ public class GradoService(ColegioContext context) : IGradoService
 
     public async Task<ServiceResponse<Grado>> AddGrado(Grado grado)
     {
+        var response = new ServiceResponse<Grado>();
         try
         {
-            var response = new ServiceResponse<Grado>();
+            
             var newGrado = await context.Grados.AddAsync(grado);
             await context.SaveChangesAsync();
             response.Data = newGrado.Entity;
             response.Success = true;
-            return response;
-            
-            return response;
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            throw;
+            if (e.InnerException != null)
+            {
+                response.Message = e.InnerException.Message;
+            }
+            else
+            {
+                response.Message = e.Message;
+            }
+            response.Success = false;
         }
+        return response;
     }
 
     public async Task<ServiceResponse<Grado>> UpdateGrado(Grado grado)

@@ -7,4 +7,5 @@ public class Grado: ColegioEntity
     public string Seccion { get; set; } = String.Empty;
     
     public ICollection<Alumno> Alumnos { get; set; } = [];
+    public Profesor? Profesor { get; set; }
 }

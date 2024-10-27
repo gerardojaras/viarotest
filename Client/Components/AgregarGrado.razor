@@ -19,11 +19,15 @@
                     @bind-Value="_model.Seccion"
                     For="@(() => _model.Seccion)"
                     Variant="Variant.Outlined"/> 
-                <MudSelect T="int" Label="Profesor" AnchorOrigin="Origin.BottomCenter" @bind-Value="_model." Variant="Variant.Outlined">
-                    <MudSelectItem Value="0">Seleccionar Casa</MudSelectItem>
-                    @foreach (var item in _houses)
+                <MudSelect T="int" 
+                           Label="Profesor" 
+                           AnchorOrigin="Origin.BottomCenter" 
+                           @bind-Value="_model.ProfesorId" 
+                           Variant="Variant.Outlined">
+                    <MudSelectItem Value="0">Seleccionar Profesor</MudSelectItem>
+                    @foreach (var item in _profesores)
                     {
-                    <MudSelectItem Value="@item.Id">@item.Number</MudSelectItem>
+                    <MudSelectItem Value="@item.Id">@item.Nombre @item.Apellido</MudSelectItem>
                     }
                 </MudSelect>
             </MudCardContent>
@@ -51,6 +55,7 @@
     {
         [Required] public string Nombre { get; set; }
         [Required] public string Seccion { get; set; }
+        [Required] public int ProfesorId { get; set; }
     }
     
     async void Submit(EditContext context)
@@ -59,17 +64,17 @@
         {
             Nombre = _model.Nombre,
             Seccion = _model.Seccion,
-            ProfesorId = 8
+            ProfesorId = _model.ProfesorId
         };
 
         var addAlumno = await Service.AddGradoAsync(entityDto);
-        if (addAlumno != null)
+        if (addAlumno.Data != null)
         {
             Snackbar.Add("Grado ha sido agregado", Severity.Success);
         }
         else
         {
-            Snackbar.Add("Grado no ha sido agregado", Severity.Error);
+            Snackbar.Add(addAlumno.Message, Severity.Error);
         }
         StateHasChanged();
     }

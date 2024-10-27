@@ -15,10 +15,15 @@ public class ProfesorService(HttpClient httpClient): IProfesorService
             if (request.IsSuccessStatusCode)
             {
                 var Profesors = request.Content.ReadFromJsonAsync<ServiceResponse<List<Profesor>>>().Result;
-                if (Profesors != null)
+                if (Profesors.Data != null)
                 {
                     response.Success = true;
-                    response = Profesors;
+                    response.Data = Profesors.Data;
+                }
+                else
+                {
+                    response.Success = false;
+                    response.Data = new List<Profesor>();
                 }
             }
 

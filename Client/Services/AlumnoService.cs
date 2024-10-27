@@ -15,10 +15,15 @@ public class AlumnoService(HttpClient httpClient): IAlumnosService
             if (request.IsSuccessStatusCode)
             {
                 var alumnos = request.Content.ReadFromJsonAsync<ServiceResponse<List<Alumno>>>().Result;
-                if (alumnos != null)
+                if (alumnos.Data != null)
                 {
                     response.Success = true;
-                    response = alumnos;
+                    response.Data = alumnos.Data;
+                }
+                else
+                {
+                    response.Success = false;
+                    response.Data = new List<Alumno>();
                 }
             }
 

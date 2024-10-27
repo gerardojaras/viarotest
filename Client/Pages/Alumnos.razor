@@ -8,12 +8,7 @@
 
 <h3>Alumnos</h3>
 
-@if (_alumnos.Count == 0)
-{
-    <MudProgressCircular Color="Color.Default" Indeterminate="true"/>
-}
-else
-{
+
     <MudGrid>
         <MudItem xs="12" Class="d-flex justify-end">
             <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="AddAlumno">Agregar Alumno</MudButton>
@@ -75,7 +70,7 @@ else
             </MudDataGrid>
         </MudItem>
     </MudGrid>
-}
+
 
 @code {
     private List<Alumno> _alumnos = [];
@@ -93,7 +88,7 @@ else
         }
         else
         {
-            Snackbar.Add("Hubo un error", Severity.Error);
+            Snackbar.Add("No hay alumnos", Severity.Error);
         }
 
         _loading = false;

@@ -8,12 +8,6 @@
 
 <h3>Grados</h3>
 
-@if (_grados.Count == 0)
-{
-<MudProgressCircular Color="Color.Default" Indeterminate="true"/>
-}
-else
-{
 <MudGrid>
     <MudItem xs="12" Class="d-flex justify-end">
         <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="AddGrado">Agregar Grado</MudButton>
@@ -52,7 +46,6 @@ else
         </MudDataGrid>
     </MudItem>
 </MudGrid>
-}
 
 @code {
      private List<Grado> _grados = [];

@@ -15,10 +15,15 @@ public class GradoService(HttpClient httpClient): IGradoService
             if (request.IsSuccessStatusCode)
             {
                 var grados = request.Content.ReadFromJsonAsync<ServiceResponse<List<Grado>>>().Result;
-                if (grados != null)
+                if (grados.Data != null)
                 {
                     response.Success = true;
-                    response = grados;
+                    response.Data = grados.Data;
+                }
+                else
+                {
+                    response.Success = false;
+                    response.Data = new List<Grado>();
                 }
             }
 
@@ -36,13 +41,14 @@ public class GradoService(HttpClient httpClient): IGradoService
         throw new NotImplementedException();
     }
 
-    public async Task<Grado> AddGradoAsync(Grado grado)
+    public async Task<ServiceResponse<Grado>> AddGradoAsync(Grado grado)
     {
         try
         {
             var request = await httpClient.PostAsJsonAsync("http://localhost:5267/api/Grado", grado);
             var response = request.Content.ReadFromJsonAsync<ServiceResponse<Grado>>().Result;
-            return response.Data;
+            var message = response.Message;
+            return response;
         }
         catch (Exception e)
         {
