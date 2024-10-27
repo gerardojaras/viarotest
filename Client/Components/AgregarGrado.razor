@@ -1,6 +1,7 @@
 @using System.ComponentModel.DataAnnotations
 @using Client.Interfaces
 @inject IGradoService Service
+@inject IProfesorService ProfesorService
 @inject ISnackbar Snackbar
 
 <MudDialog>
@@ -17,7 +18,14 @@
                     Label="Seccion"
                     @bind-Value="_model.Seccion"
                     For="@(() => _model.Seccion)"
-                    Variant="Variant.Outlined"/>
+                    Variant="Variant.Outlined"/> 
+                <MudSelect T="int" Label="Profesor" AnchorOrigin="Origin.BottomCenter" @bind-Value="_model." Variant="Variant.Outlined">
+                    <MudSelectItem Value="0">Seleccionar Casa</MudSelectItem>
+                    @foreach (var item in _houses)
+                    {
+                    <MudSelectItem Value="@item.Id">@item.Number</MudSelectItem>
+                    }
+                </MudSelect>
             </MudCardContent>
             <MudButton Color="Color.Primary" ButtonType="ButtonType.Submit">Crear Grado</MudButton>
         </EditForm>
@@ -31,7 +39,14 @@
 @code {
     [CascadingParameter] MudDialogInstance MudDialog { get; set; }
     Form _model = new();
+    private List<Profesor> _profesores = [];
 
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await ProfesorService.GetAllProfesorsAsync();
+        _profesores = response.Data;
+    }
+    
     public class Form
     {
         [Required] public string Nombre { get; set; }
