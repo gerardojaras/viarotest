@@ -39,7 +39,17 @@ public class AlumnoService(HttpClient httpClient): IAlumnosService
 
     public async Task<Alumno> AddAlumnoAsync(Alumno alumno)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var request = await httpClient.PostAsJsonAsync("http://localhost:5267/api/Alumno/Todos", alumno);
+            var response = request.Content.ReadFromJsonAsync<ServiceResponse<Alumno>>().Result;
+            return response.Data;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 
     public async Task<Alumno> UpdateAlumnoAsync(Alumno alumno)

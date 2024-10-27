@@ -1,0 +1,76 @@
+@using Client.Interfaces
+@inject IAlumnosService Service
+@inject ISnackbar Snackbar
+
+<MudDialog>
+    <DialogContent>
+        <EditForm Model="@_model" OnValidSubmit="Submit">
+            <DataAnnotationsValidator/>
+            <MudCardContent>
+                <MudTextField 
+                    Label="Nombre" 
+                    @bind-Value="_model.Nombre" 
+                    For="@(() => _model.Nombre)" 
+                    Variant="Variant.Outlined"/>
+                <MudTextField
+                    Label="Apellidos"
+                    @bind-Value="_model.Apellidos"
+                    For="@(() => _model.Apellidos)"
+                    Variant="Variant.Outlined"/>
+                <MudRadioGroup @bind-Value="_model.Gender">
+                    <MudRadio Value="1" Color="Color.Primary" Dense="true">Male</MudRadio>
+                    <MudRadio Value="2" Color="Color.Secondary" Dense="false">Female</MudRadio>
+                </MudRadioGroup>
+                <MudDatePicker
+                    Label="Fecha de nacimiento"
+                    @bind-date="_model.DateOfBirth"
+                    Variant="Variant.Outlined"/>
+            </MudCardContent>
+            <MudButton Color="Color.Primary" ButtonType="ButtonType.Submit">Crear Alumno</MudButton>
+        </EditForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    AlumnoForm _model = new();
+
+    public class AlumnoForm
+    {
+        public int Id { get; set; }
+        public string Nombre { get; set; }
+        public string Apellidos { get; set; }
+        public int Gender { get; set; }
+        public DateTime? DateOfBirth { get; set; } = DateTime.Now;
+    }
+    
+    async void Submit(EditContext context)
+    {
+        var alumnoDto = new Alumno
+        {
+            Nombre = _model.Nombre,
+            Apellidos = _model.Apellidos,
+            Genero = _model.Gender,
+            FechaDeNacimiento = _model.DateOfBirth,
+        };
+
+        var addAlumno = await Service.AddAlumnoAsync(alumnoDto);
+        if (addAlumno != null)
+        {
+            Snackbar.Add("Alumno ha sido agregado", Severity.Success);
+        }
+        else
+        {
+            Snackbar.Add("Alumno no ha sido agregado", Severity.Error);
+        }
+        StateHasChanged();
+    }
+
+    void Close()
+    {
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+}

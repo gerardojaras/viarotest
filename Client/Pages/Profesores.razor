@@ -1,6 +1,126 @@
 @page "/Profesores"
+@using System.Text.Json
+@using Client.Components
+@using Client.Interfaces
+@inject IDialogService DialogService
+@inject IProfesorService Service
+@inject ISnackbar Snackbar
+
+
 <h3>Profesores</h3>
 
+@if (_profesores.Count == 0)
+{
+<MudProgressCircular Color="Color.Default" Indeterminate="true"/>
+}
+else
+{
+<MudGrid>
+    @* <MudItem xs="12" Class="d-flex justify-end"> *@
+    @*     <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="AdAlumno">Agregar Alumno</MudButton> *@
+    @* </MudItem> *@
+    <MudItem>
+        <MudDataGrid T="Profesor"
+                     Items="@_profesores"
+                     Loading="@_loading"
+                     EditMode="DataGridEditMode.Form"
+                     StartedEditingItem="@StartedEditingItem"
+                     CanceledEditingItem="@CanceledEditingItem"
+                     CommittedItemChanges="@CommittedItemChanges"
+                     Bordered="true"
+                     Dense="true"
+                     EditTrigger="@(DataGridEditTrigger.Manual)"
+                     ReadOnly="false">
+            <Columns>
+                <PropertyColumn Property="x => x.Id" IsEditable="false" Title="Id"/>
+                <PropertyColumn Property="x => x.Nombre" Title="Nombre"/>
+                <PropertyColumn Property="x => x.Apellido" Title="Apellidos"/>
+                <PropertyColumn Property="x => x.Genero" Title="Genero"/>
+            </Columns>
+        </MudDataGrid>
+    </MudItem>
+</MudGrid>
+}
+
 @code {
+    private List<Profesor> _profesores = [];
+    private bool _loading = true;
+    private readonly List<string> _events = new();
     
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await Service.GetAllProfesorsAsync();
+        _profesores = response.Data;
+        
+        if (_profesores.Count > 0)
+        {
+            Snackbar.Add("Profesores Cargados exitosamente");
+        }
+        else
+        {
+            Snackbar.Add("Hubo un error", Severity.Error);
+        }
+
+        _loading = false;
+    }
+    
+    void StartedEditingItem(Profesor item)
+    {
+        Console.WriteLine("Editing");
+        _events.Insert(0, $"Event = StartedEditingItem, Data = {JsonSerializer.Serialize(item)}");
+    }
+
+    void CanceledEditingItem(Profesor item)
+    {
+        _events.Insert(0, $"Event = CanceledEditingItem, Data = {JsonSerializer.Serialize(item)}");
+    }
+
+    async void CommittedItemChanges(Profesor item)
+    {
+        var response = await Service.UpdateProfesorAsync(item);
+
+        if (response != null)
+        {
+            Snackbar.Add("Profesor Editado", Severity.Success);
+        }
+        else
+        {
+            Snackbar.Add("No se pudo editar el Profesor", Severity.Error);
+        }
+
+        _loading = false;
+    }
+
+    async void AddAlumno()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true, CloseButton = true };
+        var dialog = await DialogService.ShowAsync<AgregarProfesor>("Agregar Profesor", options);
+        var result = await dialog.Result;
+        if (!result.Canceled)
+        {
+            var response = await Service.GetAllProfesorsAsync();
+            _profesores = response.Data;
+        }
+
+        StateHasChanged();
+    }
+
+    async void DeleteDialog(int id)
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+        var parameters = new DialogParameters<BorrarProfesor> { { x => x.Id, id } };
+        var dialog = await DialogService.ShowAsync<BorrarProfesor>("Borrar Profesor", parameters, options);
+        var result = await dialog.Result;
+        if (result.Canceled) return;
+        var response = await Service.GetAllProfesorsAsync();
+        _profesores = response.Data;
+        StateHasChanged();
+    }
+
+    // async void PageChanged(int page)
+    // {
+    //     var response = await Service.GetAllHomes(null, page * 10);
+    //     _houses = response.Item1;
+    //     StateHasChanged();
+    // }
 }

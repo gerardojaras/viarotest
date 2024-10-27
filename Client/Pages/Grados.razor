@@ -1,6 +1,124 @@
 @page "/Grados"
+@using System.Text.Json
+@using Client.Components
+@using Client.Interfaces
+@inject IDialogService DialogService
+@inject IGradoService Service
+@inject ISnackbar Snackbar
+
 <h3>Grados</h3>
 
+@if (_grados.Count == 0)
+{
+<MudProgressCircular Color="Color.Default" Indeterminate="true"/>
+}
+else
+{
+<MudGrid>
+    <MudItem xs="12" Class="d-flex justify-end">
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="AddGrado">Agregar Grado</MudButton>
+    </MudItem>
+    <MudItem>
+        <MudDataGrid T="Grado"
+                     Items="@_grados"
+                     Loading="@_loading"
+                     EditMode="DataGridEditMode.Form"
+                     StartedEditingItem="@StartedEditingItem"
+                     CanceledEditingItem="@CanceledEditingItem"
+                     CommittedItemChanges="@CommittedItemChanges"
+                     Bordered="true"
+                     Dense="true"
+                     EditTrigger="@(DataGridEditTrigger.Manual)"
+                     ReadOnly="false">
+            <Columns>
+                <PropertyColumn Property="x => x.Id" IsEditable="false" Title="Id"/>
+                <PropertyColumn Property="x => x.Nombre" Title="Nombre"/>
+                <PropertyColumn Property="x => x.Seccion" Title="Seccion"/>
+            </Columns>
+        </MudDataGrid>
+    </MudItem>
+</MudGrid>
+}
+
 @code {
+     private List<Grado> _grados = [];
+    private bool _loading = true;
+    private readonly List<string> _events = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await Service.GetAllGradosAsync();
+        _grados = response.Data;
+        
+        if (_grados.Count > 0)
+        {
+            Snackbar.Add("Grados Cargados");
+        }
+        else
+        {
+            Snackbar.Add("Hubo un error", Severity.Error);
+        }
+
+        _loading = false;
+    }
     
+    void StartedEditingItem(Grado item)
+    {
+        Console.WriteLine("Editing");
+        _events.Insert(0, $"Event = StartedEditingItem, Data = {JsonSerializer.Serialize(item)}");
+    }
+
+    void CanceledEditingItem(Grado item)
+    {
+        _events.Insert(0, $"Event = CanceledEditingItem, Data = {JsonSerializer.Serialize(item)}");
+    }
+
+    async void CommittedItemChanges(Grado item)
+    {
+        var response = await Service.UpdateAlumnoAsync(item);
+
+        if (response != null)
+        {
+            Snackbar.Add("Grado Editado", Severity.Success);
+        }
+        else
+        {
+            Snackbar.Add("No se pudo editar el Grado", Severity.Error);
+        }
+
+        _loading = false;
+    }
+
+    async void AddGrado()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true, CloseButton = true };
+        var dialog = await DialogService.ShowAsync<AgregarGrado>("Agregar Grado", options);
+        var result = await dialog.Result;
+        if (!result.Canceled)
+        {
+            var response = await Service.GetAllGradosAsync();
+            _grados = response.Data;
+        }
+
+        StateHasChanged();
+    }
+
+    async void DeleteDialog(int id)
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+        var parameters = new DialogParameters<BorrarGrado> { { x => x.Id, id } };
+        var dialog = await DialogService.ShowAsync<BorrarGrado>("Borrar Grado", parameters, options);
+        var result = await dialog.Result;
+        if (result.Canceled) return;
+        var response = await Service.GetAllGradosAsync();
+        _grados = response.Data;
+        StateHasChanged();
+    }
+
+    // async void PageChanged(int page)
+    // {
+    //     var response = await Service.GetAllHomes(null, page * 10);
+    //     _houses = response.Item1;
+    //     StateHasChanged();
+    // }
 }

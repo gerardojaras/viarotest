@@ -1,7 +1,7 @@
 @page "/Alumnos"
 @using System.Text.Json
+@using Client.Components
 @using Client.Interfaces
-@using Shared
 @inject IDialogService DialogService
 @inject IAlumnosService Service
 @inject ISnackbar Snackbar
@@ -15,9 +15,9 @@
 else
 {
     <MudGrid>
-        @* <MudItem xs="12" Class="d-flex justify-end"> *@
-        @*     <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="AdAlumno">Agregar Alumno</MudButton> *@
-        @* </MudItem> *@
+        <MudItem xs="12" Class="d-flex justify-end">
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="AddAlumno">Agregar Alumno</MudButton>
+        </MudItem>
         <MudItem>
             <MudDataGrid T="Alumno"
                          Items="@_alumnos"
@@ -35,6 +35,21 @@ else
                              <PropertyColumn Property="x => x.Nombre" Title="Nombre"/>
                              <PropertyColumn Property="x => x.Apellidos" Title="Apellidos"/>
                              <PropertyColumn Property="x => x.FechaDeNacimiento" Title="Fecha De Nacimiento"/>
+                             <PropertyColumn Property="x => x.Genero" Title="Genero"/>
+                             <TemplateColumn Title="Actions">
+                                 <CellTemplate>
+                                     <MudStack Row="true">
+                                         <MudIconButton
+                                             Icon="@Icons.Material.Filled.Edit"
+                                             aria-level="Edit"
+                                             OnClick="@context.Actions.StartEditingItemAsync"/>
+                                         <MudIconButton
+                                             Icon="@Icons.Material.Filled.Delete"
+                                             aria-level="Delete"
+                                             OnClick="@(() => DeleteDialog(context.Item.Id))"/>
+                                     </MudStack>
+                                 </CellTemplate>
+                             </TemplateColumn>
                          </Columns>
             </MudDataGrid>
         </MudItem>
@@ -53,7 +68,7 @@ else
         
         if (_alumnos.Count > 0)
         {
-            Snackbar.Add("Alumnos Cargadas");
+            Snackbar.Add("Alumnos Cargados");
         }
         else
         {
@@ -90,7 +105,7 @@ else
         _loading = false;
     }
 
-    async void AddHome()
+    async void AddAlumno()
     {
         var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true, CloseButton = true };
         var dialog = await DialogService.ShowAsync<AgregarAlumno>("Agregar Alumno", options);
