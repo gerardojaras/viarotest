@@ -2,9 +2,32 @@
 @inject ISnackbar Snackbar
 @inject IAlumnosService Service
 
-<h3>BorrarAlumno</h3>
+<MudDialog>
+    <DialogContent>
+        Desea Borrar al Alumno Id. @Id
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">No</MudButton>
+        <MudButton Color="Color.Error" OnClick="DeleteEntity">Si</MudButton>
+    </DialogActions>
+</MudDialog>
 
 @code {
     [CascadingParameter] MudDialogInstance MudDialog { get; set; }
     [Parameter] public int Id { get; set; }
-}
+    
+    private async void DeleteEntity()
+    {
+        var deleted = await Service.DeleteAlumnoAsync(Id);
+        if (deleted != null)
+        {
+            Snackbar.Add("Alumno Borrado", Severity.Success);
+        }
+        else
+        {
+            Snackbar.Add("El Alumno no se pudo borrar", Severity.Error);
+        }
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+    void Cancel() => MudDialog.Cancel();
+} 

@@ -8,5 +8,5 @@ public interface IProfesorService
     Task<Profesor> GetProfesorByIdAsync(int id);
     Task<Profesor> AddProfesorAsync(Profesor Profesor);
     Task<Profesor> UpdateProfesorAsync(Profesor Profesor);
-    Task<Profesor> DeleteProfesorAsync(Profesor Profesor);
+    Task<Profesor> DeleteProfesorAsync(int id);
 }

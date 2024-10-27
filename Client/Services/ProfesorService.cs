@@ -36,18 +36,48 @@ public class ProfesorService(HttpClient httpClient): IProfesorService
         throw new NotImplementedException();
     }
 
-    public async Task<Profesor> AddProfesorAsync(Profesor Profesor)
+    public async Task<Profesor> AddProfesorAsync(Profesor profesor)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var request = await httpClient.PostAsJsonAsync("http://localhost:5267/api/Profesor", profesor);
+            var response = request.Content.ReadFromJsonAsync<ServiceResponse<Profesor>>().Result;
+            return response.Data;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 
-    public async Task<Profesor> UpdateProfesorAsync(Profesor Profesor)
+    public async Task<Profesor> UpdateProfesorAsync(Profesor profesor)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var request = await httpClient.PutAsJsonAsync($"http://localhost:5267/api/Profesor", profesor);
+            var response = request.Content.ReadFromJsonAsync<ServiceResponse<Profesor>>().Result;
+            return response?.Data;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 
-    public async Task<Profesor> DeleteProfesorAsync(Profesor Profesor)
+    public async Task<Profesor> DeleteProfesorAsync(int id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var request = await httpClient.DeleteAsync($"http://localhost:5267/api/Profesor?id={id}");
+            var response = request.Content.ReadFromJsonAsync<ServiceResponse<Profesor>>().Result;
+            return response?.Data;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 }

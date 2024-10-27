@@ -34,6 +34,20 @@ else
                 <PropertyColumn Property="x => x.Id" IsEditable="false" Title="Id"/>
                 <PropertyColumn Property="x => x.Nombre" Title="Nombre"/>
                 <PropertyColumn Property="x => x.Seccion" Title="Seccion"/>
+                <TemplateColumn Title="Acciones">
+                    <CellTemplate>
+                        <MudStack Row="true">
+                            <MudIconButton
+                                Icon="@Icons.Material.Filled.Edit"
+                                aria-level="Edit"
+                                OnClick="@context.Actions.StartEditingItemAsync"/>
+                            <MudIconButton
+                                Icon="@Icons.Material.Filled.Delete"
+                                aria-level="Delete"
+                                OnClick="@(() => DeleteDialog(context.Item.Id))"/>
+                        </MudStack>
+                    </CellTemplate>
+                </TemplateColumn>
             </Columns>
         </MudDataGrid>
     </MudItem>

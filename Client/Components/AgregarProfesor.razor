@@ -1,5 +1,70 @@
-<h3>AgregarProfesor</h3>
+@using System.ComponentModel.DataAnnotations
+@using Client.Interfaces
+@inject IProfesorService Service
+@inject ISnackbar Snackbar
+
+<MudDialog>
+    <DialogContent>
+        <EditForm Model="@_model" OnValidSubmit="Submit">
+            <DataAnnotationsValidator/>
+            <MudCardContent>
+                <MudTextField
+                    Label="Nombre"
+                    @bind-Value="_model.Nombre"
+                    For="@(() => _model.Nombre)"
+                    Variant="Variant.Outlined"/>
+                <MudTextField
+                    Label="Apellidos"
+                    @bind-Value="_model.Apellido"
+                    For="@(() => _model.Apellido)"
+                    Variant="Variant.Outlined"/>
+                <MudRadioGroup @bind-Value="_model.Genero">
+                    <MudRadio Value="2" Color="Color.Secondary" Dense="false">Femenino</MudRadio>
+                    <MudRadio Value="1" Color="Color.Primary" Dense="true">Masculino</MudRadio>
+                </MudRadioGroup>
+            </MudCardContent>
+            <MudButton Color="Color.Primary" ButtonType="ButtonType.Submit">Crear Profesor</MudButton>
+        </EditForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
 
 @code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    Form _model = new();
+
+    public class Form
+    {
+        [Required] public string Nombre { get; set; }
+        [Required] public string Apellido { get; set; }
+        [Required] public int Genero { get; set; } = 2;
+    }
     
+    async void Submit(EditContext context)
+    {
+        var entityDto = new Profesor
+        {
+            Nombre = _model.Nombre,
+            Apellido = _model.Apellido,
+            Genero = _model.Genero,
+        };
+
+        var addAlumno = await Service.AddProfesorAsync(entityDto);
+        if (addAlumno != null)
+        {
+            Snackbar.Add("Profesor ha sido agregado", Severity.Success);
+        }
+        else
+        {
+            Snackbar.Add("Profesor no ha sido agregado", Severity.Error);
+        }
+        StateHasChanged();
+    }
+
+    void Close()
+    {
+        MudDialog.Close(DialogResult.Ok(true));
+    }
 }

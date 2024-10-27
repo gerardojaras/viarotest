@@ -35,20 +35,29 @@ else
                              <PropertyColumn Property="x => x.Nombre" Title="Nombre"/>
                              <PropertyColumn Property="x => x.Apellidos" Title="Apellidos"/>
                              <PropertyColumn Property="x => x.FechaDeNacimiento" Title="Fecha De Nacimiento"/>
-                             <PropertyColumn Property="x => x.Genero" Title="Gender" Hidden="true"/>
+                             @* <PropertyColumn Property="x => x.Genero" Title="Gender" Hidden="true"/> *@
+                             <PropertyColumn Property="x => x.Genero" Hidden="true">
+                                 <EditTemplate>
+                                     <MudSelect @bind-Value="context.Item.Genero" Margin="@Margin.Dense">
+                                         <MudSelectItem Value="1">Masculino</MudSelectItem>
+                                         <MudSelectItem Value="2">Femenino</MudSelectItem>
+                                     </MudSelect>
+                                 </EditTemplate>
+                             </PropertyColumn>
+                             
                              <TemplateColumn Title="Genero">
                                  <CellTemplate>
                                      @if (context.Item.Genero == 1)
                                      {
-                                         <MudButton Variant="Variant.Text">Male</MudButton>
+                                         <MudButton Variant="Variant.Text">Masculino</MudButton>
                                      }
                                      else
                                      {
-                                         <MudButton Variant="Variant.Text">Female</MudButton>
+                                         <MudButton Variant="Variant.Text">Femenino</MudButton>
                                      }
                                  </CellTemplate>
                              </TemplateColumn>
-                             <TemplateColumn Title="Actions">
+                             <TemplateColumn Title="Acciones">
                                  <CellTemplate>
                                      <MudStack Row="true">
                                          <MudIconButton
@@ -137,10 +146,13 @@ else
         var parameters = new DialogParameters<BorrarAlumno> { { x => x.Id, id } };
         var dialog = await DialogService.ShowAsync<BorrarAlumno>("Borrar Alumno", parameters, options);
         var result = await dialog.Result;
-        if (result.Canceled) return;
-        var response = await Service.GetAllAlumnosAsync();
-        _alumnos = response.Data;
-        StateHasChanged();
+        if (!result.Canceled)
+        {
+            var response = await Service.GetAllAlumnosAsync();
+            _alumnos = response.Data;
+            StateHasChanged();
+        }
+        
     }
 
     // async void PageChanged(int page)

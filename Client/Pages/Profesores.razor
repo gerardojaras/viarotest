@@ -16,9 +16,9 @@
 else
 {
 <MudGrid>
-    @* <MudItem xs="12" Class="d-flex justify-end"> *@
-    @*     <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="AdAlumno">Agregar Alumno</MudButton> *@
-    @* </MudItem> *@
+    <MudItem xs="12" Class="d-flex justify-end">
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="AddProfesor">Agregar Profesor</MudButton>
+    </MudItem>
     <MudItem>
         <MudDataGrid T="Profesor"
                      Items="@_profesores"
@@ -32,10 +32,44 @@ else
                      EditTrigger="@(DataGridEditTrigger.Manual)"
                      ReadOnly="false">
             <Columns>
-                <PropertyColumn Property="x => x.Id" IsEditable="false" Title="Id"/>
+                <PropertyColumn Property="x => x.Id" Editable="false" Title="Id"/>
                 <PropertyColumn Property="x => x.Nombre" Title="Nombre"/>
                 <PropertyColumn Property="x => x.Apellido" Title="Apellidos"/>
-                <PropertyColumn Property="x => x.Genero" Title="Genero"/>
+                <PropertyColumn Property="x => x.Genero" Hidden="true">
+                    <EditTemplate>
+                        <MudSelect @bind-Value="context.Item.Genero" Margin="@Margin.Dense">
+                            <MudSelectItem Value="1">Masculino</MudSelectItem>
+                            <MudSelectItem Value="2">Femenino</MudSelectItem>
+                        </MudSelect>
+                    </EditTemplate>
+                </PropertyColumn>
+
+                <TemplateColumn Title="Genero">
+                    <CellTemplate>
+                        @if (context.Item.Genero == 1)
+                        {
+                        <MudButton Variant="Variant.Text">Masculino</MudButton>
+                        }
+                        else
+                        {
+                        <MudButton Variant="Variant.Text">Femenino</MudButton>
+                        }
+                    </CellTemplate>
+                </TemplateColumn>
+                <TemplateColumn Title="Acciones">
+                    <CellTemplate>
+                        <MudStack Row="true">
+                            <MudIconButton
+                                Icon="@Icons.Material.Filled.Edit"
+                                aria-level="Edit"
+                                OnClick="@context.Actions.StartEditingItemAsync"/>
+                            <MudIconButton
+                                Icon="@Icons.Material.Filled.Delete"
+                                aria-level="Delete"
+                                OnClick="@(() => DeleteDialog(context.Item.Id))"/>
+                        </MudStack>
+                    </CellTemplate>
+                </TemplateColumn>
             </Columns>
         </MudDataGrid>
     </MudItem>
@@ -91,7 +125,7 @@ else
         _loading = false;
     }
 
-    async void AddAlumno()
+    async void AddProfesor()
     {
         var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true, CloseButton = true };
         var dialog = await DialogService.ShowAsync<AgregarProfesor>("Agregar Profesor", options);

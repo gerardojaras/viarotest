@@ -52,13 +52,33 @@ public class AlumnoService(HttpClient httpClient): IAlumnosService
         }
     }
 
-    public async Task<Alumno> UpdateAlumnoAsync(Alumno alumno)
+    public async Task<Alumno?> UpdateAlumnoAsync(Alumno alumno)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var request = await httpClient.PutAsJsonAsync($"http://localhost:5267/api/Alumno", alumno);
+            ServiceResponse<Alumno?>? response = request.Content.ReadFromJsonAsync<ServiceResponse<Alumno>>().Result;
+            return response?.Data;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 
-    public async Task<Alumno> DeleteAlumnoAsync(Alumno alumno)
+    public async Task<Alumno?> DeleteAlumnoAsync(int id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var request = await httpClient.DeleteAsync($"http://localhost:5267/api/Alumno?id={id}");
+            var response = request.Content.ReadFromJsonAsync<ServiceResponse<Alumno>>().Result;
+            return response?.Data;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 }
