@@ -31,11 +31,23 @@ else
                          EditTrigger="@(DataGridEditTrigger.Manual)"
                          ReadOnly="false">
                          <Columns>
-                             <PropertyColumn Property="x => x.Id" IsEditable="false" Title="Id"/>
+                             <PropertyColumn Property="x => x.Id" Editable="false" Title="Id"/>
                              <PropertyColumn Property="x => x.Nombre" Title="Nombre"/>
                              <PropertyColumn Property="x => x.Apellidos" Title="Apellidos"/>
                              <PropertyColumn Property="x => x.FechaDeNacimiento" Title="Fecha De Nacimiento"/>
-                             <PropertyColumn Property="x => x.Genero" Title="Genero"/>
+                             <PropertyColumn Property="x => x.Genero" Title="Gender" Hidden="true"/>
+                             <TemplateColumn Title="Genero">
+                                 <CellTemplate>
+                                     @if (context.Item.Genero == 1)
+                                     {
+                                         <MudButton Variant="Variant.Text">Male</MudButton>
+                                     }
+                                     else
+                                     {
+                                         <MudButton Variant="Variant.Text">Female</MudButton>
+                                     }
+                                 </CellTemplate>
+                             </TemplateColumn>
                              <TemplateColumn Title="Actions">
                                  <CellTemplate>
                                      <MudStack Row="true">

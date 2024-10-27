@@ -41,7 +41,7 @@ public class AlumnoService(HttpClient httpClient): IAlumnosService
     {
         try
         {
-            var request = await httpClient.PostAsJsonAsync("http://localhost:5267/api/Alumno/Todos", alumno);
+            var request = await httpClient.PostAsJsonAsync("http://localhost:5267/api/Alumno", alumno);
             var response = request.Content.ReadFromJsonAsync<ServiceResponse<Alumno>>().Result;
             return response.Data;
         }
