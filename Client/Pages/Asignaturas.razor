@@ -1,6 +1,53 @@
 @page "/Asignaturas"
-<h3>Asignaturas</h3>
+@inject GradoService GradoService
+@inject AlumnoService AlumnoService
+@inject ISnackbar Snackbar
+
+<h3>Asignar Alumno a Grado</h3>
+
+<MudSelect T="int" MultiSelection="true" SelectAll="true" SelectAllText="Select Alumnos" @bind-Value="AlumnoValue" @bind-SelectedValues="_selectedAlumnos" MultiSelectionTextFunc="@(new Func<List<string>, string>(GetMultiSelectionText))" Label="Felines" AdornmentIcon="@Icons.Material.Filled.Search">
+    @foreach (var alumno in _alumnos)
+    {
+    <MudSelectItem T="int" Value="@alumno.Id">@alumno.Nombre @alumno.Apellidos</MudSelectItem>
+    }
+</MudSelect>
 
 @code {
+    private List<Alumno> _alumnos = [];
+    private List<Grado> _grados = [];
+    private IEnumerable<int> _selectedAlumnos = [];
+    private int AlumnoValue { get; set; } = 0;
     
+    protected override async Task OnInitializedAsync()
+    {
+        var allAlumnosAsync = await AlumnoService.GetAllAlumnosAsync();
+        _alumnos = allAlumnosAsync.Data;
+        
+        if (_alumnos.Count > 0)
+        {
+            Snackbar.Add("Alumnos Cargados");
+        }
+        else
+        {
+            Snackbar.Add("No hay alumnos", Severity.Error);
+        }
+        
+        var allGradosAsync = await GradoService.GetAllGradosAsync();
+        _grados = allGradosAsync.Data;
+        
+        
+        if (_grados.Count > 0)
+        {
+            Snackbar.Add("Grados Cargados");
+        }
+        else
+        {
+            Snackbar.Add("Hubo un error", Severity.Error);
+        }
+    }
+    
+    private string GetMultiSelectionText(List<string> selectedValues)
+    {
+        return $"{selectedValues.Count}";
+    }
 }
