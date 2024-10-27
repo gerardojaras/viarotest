@@ -1,5 +1,66 @@
-<h3>AgregarGrado</h3>
+@using System.ComponentModel.DataAnnotations
+@using Client.Interfaces
+@inject IGradoService Service
+@inject ISnackbar Snackbar
+
+<MudDialog>
+    <DialogContent>
+        <EditForm Model="@_model" OnValidSubmit="Submit">
+            <DataAnnotationsValidator/>
+            <MudCardContent>
+                <MudTextField
+                    Label="Nombre"
+                    @bind-Value="_model.Nombre"
+                    For="@(() => _model.Nombre)"
+                    Variant="Variant.Outlined"/>
+                <MudTextField
+                    Label="Seccion"
+                    @bind-Value="_model.Seccion"
+                    For="@(() => _model.Seccion)"
+                    Variant="Variant.Outlined"/>
+            </MudCardContent>
+            <MudButton Color="Color.Primary" ButtonType="ButtonType.Submit">Crear Grado</MudButton>
+        </EditForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
 
 @code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    Form _model = new();
+
+    public class Form
+    {
+        [Required] public string Nombre { get; set; }
+        [Required] public string Seccion { get; set; }
+    }
     
+    async void Submit(EditContext context)
+    {
+        var entityDto = new Grado
+        {
+            Nombre = _model.Nombre,
+            Seccion = _model.Seccion,
+            ProfesorId = 8
+        };
+
+        var addAlumno = await Service.AddGradoAsync(entityDto);
+        if (addAlumno != null)
+        {
+            Snackbar.Add("Grado ha sido agregado", Severity.Success);
+        }
+        else
+        {
+            Snackbar.Add("Grado no ha sido agregado", Severity.Error);
+        }
+        StateHasChanged();
+    }
+
+    void Close()
+    {
+        MudDialog.Close(DialogResult.Ok(true));
+    }
 }

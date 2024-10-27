@@ -36,18 +36,48 @@ public class GradoService(HttpClient httpClient): IGradoService
         throw new NotImplementedException();
     }
 
-    public async Task<Grado> AddAlumnoAsync(Grado Grado)
+    public async Task<Grado> AddGradoAsync(Grado grado)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var request = await httpClient.PostAsJsonAsync("http://localhost:5267/api/Grado", grado);
+            var response = request.Content.ReadFromJsonAsync<ServiceResponse<Grado>>().Result;
+            return response.Data;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 
-    public async Task<Grado> UpdateAlumnoAsync(Grado Grado)
+    public async Task<Grado> UpdateGradoAsync(Grado grado)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var request = await httpClient.PutAsJsonAsync($"http://localhost:5267/api/Grado", grado);
+            var response = request.Content.ReadFromJsonAsync<ServiceResponse<Grado>>().Result;
+            return response?.Data;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 
-    public async Task<Grado> DeleteAlumnoAsync(Grado Grado)
+    public async Task<Grado> DeleteGradoAsync(int id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var request = await httpClient.DeleteAsync($"http://localhost:5267/api/Grado?id={id}");
+            var response = request.Content.ReadFromJsonAsync<ServiceResponse<Grado>>().Result;
+            return response?.Data;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 }

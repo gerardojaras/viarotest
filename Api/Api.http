@@ -27,7 +27,7 @@ Content-Type: application/json
 }
 
 ### delete alumno
-DELETE {{Api_HostAddress}}/api/Alumno?id=1
+DELETE {{Api_HostAddress}} 
 Accept: application/json
 
 ### get Alumno

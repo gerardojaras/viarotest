@@ -31,7 +31,7 @@ else
                      EditTrigger="@(DataGridEditTrigger.Manual)"
                      ReadOnly="false">
             <Columns>
-                <PropertyColumn Property="x => x.Id" IsEditable="false" Title="Id"/>
+                <PropertyColumn Property="x => x.Id" Editable="false" Title="Id"/>
                 <PropertyColumn Property="x => x.Nombre" Title="Nombre"/>
                 <PropertyColumn Property="x => x.Seccion" Title="Seccion"/>
                 <TemplateColumn Title="Acciones">
@@ -89,7 +89,7 @@ else
 
     async void CommittedItemChanges(Grado item)
     {
-        var response = await Service.UpdateAlumnoAsync(item);
+        var response = await Service.UpdateGradoAsync(item);
 
         if (response != null)
         {
