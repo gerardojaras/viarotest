@@ -13,7 +13,10 @@ public class AlumnoService(ColegioContext context) : IAlumnoService
         try
         {
             var response = new ServiceResponse<Alumno>();
-            var alumno = await context.Alumnos.FirstOrDefaultAsync(a => a.Id == id);
+            var alumno = await context
+                .Alumnos
+                .Include(a => a.Grados)
+                .FirstOrDefaultAsync(a => a.Id == id);
             if (alumno != null)
             {
                 response.StatusCode = 200;
@@ -42,7 +45,9 @@ public class AlumnoService(ColegioContext context) : IAlumnoService
         try
         {
             var response = new ServiceResponse<List<Alumno>>();
-            var alumnos = await context.Alumnos.ToListAsync();
+            var alumnos = await context.Alumnos
+                .Include(a => a.Grados)
+                .ToListAsync();
             if (alumnos.Count != 0)
             {
                 response.Data = alumnos;
