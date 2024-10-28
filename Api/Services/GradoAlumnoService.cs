@@ -42,7 +42,7 @@ public class GradoAlumnoService(ColegioContext context): IGradoAlumnoService
             }
             catch (Exception e)
             {
-                response.Message = e.Message;
+                response.Message = e.InnerException != null ? e.InnerException.Message : e.Message;
                 response.StatusCode = 500;
                 response.Success = false;
             }
@@ -92,7 +92,7 @@ public class GradoAlumnoService(ColegioContext context): IGradoAlumnoService
             }
             catch (Exception e)
             {
-                response.Message = e.Message;
+                response.Message = e.InnerException != null ? e.InnerException.Message : e.Message;
                 response.StatusCode = 500;
                 response.Success = false;
             }
