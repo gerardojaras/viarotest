@@ -48,7 +48,7 @@
     protected override async Task OnInitializedAsync()
     {
         var response = await ProfesorService.GetAllProfesorsAsync();
-        _profesores = response.Data;
+        _profesores = response.Data; 
     }
     
     public class Form
