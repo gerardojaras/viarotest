@@ -2,103 +2,78 @@
 @using Client.Interfaces
 @inject IGradoService GradoService
 @inject IAlumnosService AlumnoService
+@inject IAsignaturaService AsignaturaService
 @inject ISnackbar Snackbar
 
 <h3>Asignar Alumno a Grado</h3>
 
-<MudSelect T="string" MultiSelection="false" SelectAll="false" SelectAllText="Seleccione Alumnos" @bind-Value="AlumnoValue" @bind-SelectedValues="_selectedAlumnos" MultiSelectionTextFunc="@(new Func<List<string>, string>(GetMultiSelectionText))" Label="Seleccion Alumno" AdornmentIcon="@Icons.Material.Filled.Search">
-    @foreach (var alumno in _alumnos)
-    {
-        <MudSelectItem T="string" Value="@alumno.Id.ToString()">@alumno.Nombre @alumno.Apellidos</MudSelectItem>
-    }
-</MudSelect>
 
-<MudSelect T="string" MultiSelection="false" SelectAll="false" SelectAllText="Seleccione Grados" @bind-Value="GradoValue" @bind-SelectedValues="_selectedGrados" MultiSelectionTextFunc="@(new Func<List<string>, string>(GetMultiSelectionText))" Label="Seleccion Grado" AdornmentIcon="@Icons.Material.Filled.Search">
-    @foreach (var grado in _grados)
-    {
-        <MudSelectItem T="string" Value="@grado.Id.ToString()">@grado.Nombre @grado.Seccion</MudSelectItem>
-    }
-</MudSelect>
+<MudGrid>
+    <MudItem xs="6">
+        <MudSelect @bind-Value="_selectedAlumno" Dense="true" Label="Seleccion Alumno">
+            @foreach (var alumno in _alumnos)
+            {
+                <MudSelectItem T="string" Value="@alumno.Id.ToString()">@alumno.Nombre @alumno.Apellidos</MudSelectItem>
+            }
+        </MudSelect>
+    </MudItem>
+    <MudItem xs="6">
+        <MudSelect @bind-Value="_selectedGrado" Dense="true" Label="Seleccion Grado">
+            @foreach (var grado in _grados)
+            {
+                <MudSelectItem T="string" Value="@grado.Id.ToString()">@grado.Nombre @grado.Seccion</MudSelectItem>
+            }
+        </MudSelect>
+    </MudItem>
+    <MudItem xs="6">
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="AssignAlumno">Asignar Alumno</MudButton>
+    </MudItem>
+    <MudItem xs="6">
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="UnAssignAlumno">Remover Alumno</MudButton>
+    </MudItem>
+    <MudItem xs="12">
+        <MudCard>
+            <MudDataGrid T="Alumno"
+                         Items="@_alumnos"
+                         Loading="@_loading"
+                         EditMode="DataGridEditMode.Form"
+                         Bordered="true"
+                         Dense="true"
+                         EditTrigger="@(DataGridEditTrigger.Manual)"
+                         ReadOnly="true">
+                <Columns>
+                    <PropertyColumn Property="x => x.Id" Editable="false" Title="Id"/>
+                    <PropertyColumn Property="x => x.Nombre" Title="Nombre"/>
+                    <PropertyColumn Property="x => x.Apellidos" Title="Apellidos"/>
+                    <TemplateColumn Title="Grado">
+                        <CellTemplate>
+                            @if (context.Item.Grados.Count > 0)
+                            {
+                                @context.Item.Grados.FirstOrDefault().Nombre
+                            }
+                        </CellTemplate>
+                    </TemplateColumn>
+                   
+                </Columns>
+            </MudDataGrid>
+        </MudCard>
+    </MudItem>
+</MudGrid>
 
-<MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="AssignAlumno">Agregar Alumno</MudButton>
-
-
-<MudDataGrid T="Alumno"
-             Items="@_alumnos"
-             Loading="@_loading"
-             EditMode="DataGridEditMode.Form"
-             Bordered="true"
-             Dense="true"
-             EditTrigger="@(DataGridEditTrigger.Manual)"
-             ReadOnly="true">
-    <Columns>
-        <PropertyColumn Property="x => x.Id" Editable="false" Title="Id"/>
-        <PropertyColumn Property="x => x.Nombre" Title="Nombre"/>
-        <PropertyColumn Property="x => x.Apellidos" Title="Apellidos"/>
-        <TemplateColumn Title="Grado">
-            <CellTemplate>
-                @if (context.Item.Grados.Count > 0)
-                {
-                    @context.Item.Grados.FirstOrDefault().Nombre
-                }
-
-            </CellTemplate>
-        </TemplateColumn>
-        @* <PropertyColumn Property="x => x.FechaDeNacimiento" Title="Fecha De Nacimiento"/> *@
-        @* <PropertyColumn Property="x => x.Genero" Title="Gender" Hidden="true"/> *@
-        @* <PropertyColumn Property="x => x.Genero" Hidden="true"> *@
-        @*     <EditTemplate> *@
-        @*         <MudSelect @bind-Value="context.Item.Genero" Margin="@Margin.Dense"> *@
-        @*             <MudSelectItem Value="1">Masculino</MudSelectItem> *@
-        @*             <MudSelectItem Value="2">Femenino</MudSelectItem> *@
-        @*         </MudSelect> *@
-        @*     </EditTemplate> *@
-        @* </PropertyColumn> *@
-
-        @* <TemplateColumn Title="Genero"> *@
-        @*     <CellTemplate> *@
-        @*         @if (context.Item.Genero == 1) *@
-        @*         { *@
-        @*             <MudButton Variant="Variant.Text">Masculino</MudButton> *@
-        @*         } *@
-        @*         else *@
-        @*         { *@
-        @*             <MudButton Variant="Variant.Text">Femenino</MudButton> *@
-        @*         } *@
-        @*     </CellTemplate> *@
-        @* </TemplateColumn> *@
-        @* <TemplateColumn Title="Acciones"> *@
-        @*     <CellTemplate> *@
-        @*         <MudStack Row="true"> *@
-        @*             <MudIconButton *@
-        @*                 Icon="@Icons.Material.Filled.Edit" *@
-        @*                 aria-level="Edit" *@
-        @*                 OnClick="@context.Actions.StartEditingItemAsync"/> *@
-        @*             <MudIconButton *@
-        @*                 Icon="@Icons.Material.Filled.Delete" *@
-        @*                 aria-level="Delete" *@
-        @*                 OnClick="@(() => DeleteDialog(context.Item.Id))"/> *@
-        @*         </MudStack> *@
-        @*     </CellTemplate> *@
-        @* </TemplateColumn> *@
-    </Columns>
-</MudDataGrid>
 
 @code {
     private List<Alumno> _alumnos = [];
     private List<Grado> _grados = [];
-    private IEnumerable<string> _selectedAlumnos = [];
-    private IEnumerable<string> _selectedGrados = [];
-    private string AlumnoValue { get; set; } = "Seleccione alumno";
-    private string GradoValue { get; set; } = "Seleccione grado";
+    private string _selectedAlumno { get; set; } = "Seleccione Alumno";
+    private string _selectedGrado { get; set; } = "Seleccione Grado";
     private bool _loading = true;
     private readonly List<string> _events = new();
-    
+
     protected override async Task OnInitializedAsync()
     {
         var allAlumnosAsync = await AlumnoService.GetAllAlumnosAsync();
         _alumnos = allAlumnosAsync.Data;
-        
+
         if (_alumnos.Count > 0)
         {
             Snackbar.Add("Alumnos Cargados");
@@ -107,11 +82,11 @@
         {
             Snackbar.Add("No hay alumnos", Severity.Error);
         }
-        
+
         var allGradosAsync = await GradoService.GetAllGradosAsync();
         _grados = allGradosAsync.Data;
-        
-        
+
+
         if (_grados.Count > 0)
         {
             Snackbar.Add("Grados Cargados");
@@ -120,12 +95,11 @@
         {
             Snackbar.Add("Grados No cargados", Severity.Error);
         }
-        
+
         _loading = false;
     }
-    
-    
-    
+
+
     private string GetMultiSelectionText(List<string> selectedValues)
     {
         return $"{selectedValues.Count}";
@@ -133,7 +107,51 @@
 
     async void AssignAlumno()
     {
-        var alumnosSeleccionados = _alumnos;
-        var gradosSeleccionados = _grados;
+        try
+        {
+            var request = await AsignaturaService.AssignAlumno(int.Parse(_selectedAlumno), int.Parse(_selectedGrado));
+            var assigned = request.Data;
+            if (request.Success)
+            {
+                var allAlumnosAsync = await AlumnoService.GetAllAlumnosAsync();
+                _alumnos = allAlumnosAsync.Data;
+                Snackbar.Add("Asignación reallizada con éxito");
+                StateHasChanged();
+            }
+            else
+            {
+                Snackbar.Add(request.Message, Severity.Error);
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    async void UnAssignAlumno()
+    {
+        try
+        {
+            var request = await AsignaturaService.UnAssignAlumno(int.Parse(_selectedAlumno), int.Parse(_selectedGrado));
+            var assigned = request.Data;
+            if (request.Success)
+            {
+                var allAlumnosAsync = await AlumnoService.GetAllAlumnosAsync();
+                _alumnos = allAlumnosAsync.Data;
+                Snackbar.Add("Alumno Eliminado de curso con éxito");
+                StateHasChanged();
+            }
+            else
+            {
+                Snackbar.Add(request.Message, Severity.Error);
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 }

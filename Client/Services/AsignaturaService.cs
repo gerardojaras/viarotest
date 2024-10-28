@@ -6,55 +6,73 @@ namespace Client.Services;
 
 public class AsignaturaService(HttpClient httpClient): IAsignaturaService
 {
-    public async Task<ServiceResponse<bool>> AssignAlumno(int alumnoId, int gradoId)
+    public async Task<ServiceResponse<Alumno>> AssignAlumno(int alumnoId, int gradoId)
     {
+        var response = new ServiceResponse<Alumno>();
         try
         {
             var request = await httpClient
-                .GetAsync($"http://localhost:5267/api/api/GradoAlumno/Assignar?AlumnoId={alumnoId}&GradoId={gradoId}");
-            var response = new ServiceResponse<bool>();
+                .GetAsync($"http://localhost:5267/api/GradoAlumno/Asignar?AlumnoId={alumnoId}&GradoId={gradoId}");
+           
             if (request.IsSuccessStatusCode)
             {
-                var alumnos = request.Content.ReadFromJsonAsync<ServiceResponse<List<Alumno>>>().Result;
+                var alumnos = request.Content.ReadFromJsonAsync<ServiceResponse<Alumno>>().Result;
                 if (alumnos.Data != null)
                 {
                     response.Success = true;
-                    response.Data = true;
+                    response.Data = alumnos.Data;
+                    response.Message = alumnos.Message;
                 }
                 else
                 {
                     response.Success = false;
-                    response.Data = false;
+                    response.Data = new Alumno();
+                    response.Message = alumnos.Message;
                 }
             }
 
-            return response;
+           
         }
         catch (Exception ex)
         {
-            Console.Write(ex.Message);
-            throw;
+            response.Success = false;
+            response.Data = new Alumno();
+            response.Message = ex.Message;
         }
+        return response;
     }
 
-    public async Task<ServiceResponse<bool>> UnAssignAlumno(int alumnoId, int gradoId)
+    public async Task<ServiceResponse<Alumno>> UnAssignAlumno(int alumnoId, int gradoId)
     {
-        var request = await httpClient
-            .GetAsync($"http://localhost:5267/api/api/GradoAlumno/Remover?AlumnoId={alumnoId}&GradoId={gradoId}");
-        var response = new ServiceResponse<bool>();
-        if (request.IsSuccessStatusCode)
+        var response = new ServiceResponse<Alumno>();
+        try
         {
-            var alumnos = request.Content.ReadFromJsonAsync<ServiceResponse<List<Alumno>>>().Result;
-            if (alumnos.Data != null)
+            var request = await httpClient
+                .GetAsync($"http://localhost:5267/api/GradoAlumno/Remover?AlumnoId={alumnoId}&GradoId={gradoId}");
+
+            if (request.IsSuccessStatusCode)
             {
-                response.Success = true;
-                response.Data = true;
+                var alumnos = request.Content.ReadFromJsonAsync<ServiceResponse<Alumno>>().Result;
+                if (alumnos.Data != null)
+                {
+                    response.Success = true;
+                    response.Data = alumnos.Data;
+                    response.Message = alumnos.Message;
+                }
+                else
+                {
+                    response.Success = false;
+                    response.Data = new Alumno();
+                    response.Message = alumnos.Message;
+                }
             }
-            else
-            {
-                response.Success = false;
-                response.Data = false;
-            }
+        }
+        catch (Exception e)
+        {
+           response.Success = false;
+           response.Message = e.Message;
+           response.Data = new Alumno();
+           response.StatusCode = 500;
         }
 
         return response;
